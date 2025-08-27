@@ -1,4 +1,3 @@
-
 .feature-icon {
     width: 4rem;
     height: 4rem;
@@ -11,6 +10,8 @@
     background: linear-gradient(135deg, #0d6efd, #0a58ca);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
+
+
 
 .feature-icon svg {
     width: 1.5em;
@@ -42,7 +43,7 @@
 body {
     font-family: 'Inter', 'Segoe UI', sans-serif;
     line-height: 1.6;
-    background: #f8f9fa;
+    background: #EEE;
     color: #212529;
 }
 
@@ -79,6 +80,7 @@ h1.display-5 {
     font-weight: 800;
     letter-spacing: -0.5px;
 }
+
 
 .lead {
     color: #495057;
@@ -237,30 +239,187 @@ footer p {
     box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.2);
 }
 
+.personal {
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: #212529;
+    border-radius: 15px;
+    padding: 10px;
+    border: #0a58ca solid 2px;
+}
+
+#user-name {
+    font-weight: 900;
+    margin-bottom: 100px;
+}
+
 #inbox {
     border: #0a58ca solid 3px;
     border-radius: 1.5 rem;
 }
 
 /* Error Page Styling */
-#error-container{
-    margin-top: 10%; 
+#error-container {
+    margin-top: 10%;
     margin-bottom: 10%;
 }
 
-#description{
+#description {
     height: 100px;
     resize: none;
 }
 
 #priority-circle {
-    display:inline-block;
-    width:20px;
-    height:20px; 
-    border-radius:50%;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    position: relative;
+    top: 4px;
 }
 
 .timeline {
     transition: width 0.5s ease;
     border-radius: 5px;
+}
+
+#tasks-btn {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1),
+        0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+#personal-info-pic {
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border: 2px solid #0d6efd;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.complete {
+    opacity: 0.6;
+}
+
+.overdue {
+    opacity: 0.7;
+    border: 2px solid #dc3545;
+    box-shadow: 0 0 10px rgba(220, 53, 69, 0.5);
+}
+
+/* body {
+    background: linear-gradient(135deg, #a3c4f3 0%, #799edb 50%, #5679c1 100%);
+
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+} */
+/* 
+#add-edit-task-container{
+      background-color: #EEE;
+} */
+
+#changepersonalinfo {
+    background-color: #ffffff;
+    padding: 25px 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    max-width: 600px;
+    margin: auto;
+}
+
+/* Input fields */
+#changepersonalinfo .form-control {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 10px 15px;
+    font-size: 16px;
+    transition: 0.3s ease;
+}
+
+#changepersonalinfo .form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 5px rgba(13, 110, 253, 0.3);
+    outline: none;
+}
+
+/* Labels */
+#changepersonalinfo .form-label {
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #495057;
+}
+
+/* Error messages */
+#changepersonalinfo .text-danger {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Submit button */
+#changepersonalinfo .btn-primary {
+    background-color: #b64448;
+    border-color: #fad0c4;
+    font-size: 18px;
+    padding: 10px 0;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+#changepersonalinfo .btn-primary:hover {
+    background-color: #c46e71;
+    border-color: #fad0c4;
+    transform: translatey(-10px);
+}
+
+/* Add spacing between inputs */
+#changepersonalinfo .mb-3 {
+    margin-bottom: 20px;
+}
+
+/* File input styling */
+#changepersonalinfo input[type="file"] {
+    padding: 6px 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #changepersonalinfo {
+        padding: 20px 15px;
+    }
+}
+
+#achievment {
+    position: relative;
+    width: 100%;
+    height: 10px;
+    margin: 20px 0;
+}
+
+#achievment-line {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+    animation: loadLine 2s forwards;
+    border-radius: 5px;
+}
+
+#progress {
+    font-weight: 700;
+    color: #212529;
+    font-family: fantasy;
+    letter-spacing: 2px;
+}
+
+#progress-text {
+    float: right;
+    font-weight: 600;
+    position: relative;
+    top: 20px;
 }

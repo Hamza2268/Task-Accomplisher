@@ -18,12 +18,17 @@
                         placeholder="name@example.com"> -->
                          <label for="floatingInput">Email address</label> </div>
                 <div class="form-floating mb-3"> 
-                        {{ form.Password(class="form-control", id="floatingPassword", placeholder="Password") }}
+                        {{ form.Password(class="form-control fa-eye", id="floatingPassword", placeholder="Password") }}
                     <!-- <input type="password" class="form-control" id="floatingPassword"
                         placeholder="Password"> -->
-                         <label for="floatingPassword">Password</label> </div>
+                         <label for="floatingPassword">Password</label> 
+                        <div class="fa fa-eye" id="togglePassword" style="position: absolute; right: 10px; top: 20px; cursor: pointer;scale:1.2;">👀</div>
+                        </div>
                 <div class="checkbox mb-3"> <label> <input type="checkbox" value="remember-me"> Remember me
                     </label> </div> <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+                    <!-- <hr class="my-4"> -->
+                <small style="margin: 10px 5px;" class="text-body-secondary">Don't Have an account? <a href="{{ url_for('register') }}">Sign
+                        up</a></small>
                 <hr class="my-4"> <small class="text-body-secondary">By clicking Sign up, you agree to the terms of
                     use.</small>
             </form>

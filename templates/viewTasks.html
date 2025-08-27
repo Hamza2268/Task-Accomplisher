@@ -1,19 +1,71 @@
 {% extends 'base.html' %}
 {% block content %}
+<style>
+    a {
+        text-decoration: none;
+    }
+</style>
+
+<div class="container-fluid p-0">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom" style="width:100%">
+        <a href="{{ url_for('personal_info') }}"
+            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <div class="welcome-photo">
+                <img id="personal-photo" src="{{ url_for('static', filename='profile_pics/' ~ user.photo) }}"
+                    alt="{{ user.username }}">
+            </div>
+        </a>
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a href="/user/home" class="nav-link active header-list" aria-current="page">Home</a>
+            </li>
+            <li class="nav-item header-list"><a href="{{ url_for('view_tasks') }}" id="tasks-btn"
+                    class="nav-link">Tasks</a></li>
+        </ul>
+    </header>
+</div>
 <div class="container mt-5">
-    <h2 class="mb-4">Your Tasks</h2>
+    {% if total %}
+    <div style="margin-top: 0;">
+        <h3 style="margin-bottom: 0;" id="progress">Your Progress</h4>
+            <div id="achievment" style="margin-top: 5px;">
+                <span acheived={{acheived}} total="{{total}}" id="achievment-line">
+                </span>
+                <span id="progress-text">{{acheived}} / {{total}} Goals Achieved</span>
+            </div>
+    </div>
+    {% endif %}
+    <h2 class="mb-4">Tasks
+        <span>
+            <a style="margin-left: 10px;" href="{{ url_for('add_task') }}">
+                <button type="button" class="btn btn-outline-dark "> Add New Goal
+                </button>
+            </a>
+        </span>
+    </h2>
+
+
     {% if tasks %}
     <div class="list-group">
         {% for task in tasks %}
-        <div class="card" id="{{ task.id }}">
+        {% if task.CompletedDate %}
+        {% set cls = 'complete' %}
+        {% else %}
+        {% set cls = '' %}
+        {% endif %}
+        <div class="card taskCard {{cls}}" id="{{ task.id }}" style="margin-bottom: 20px;">
             <div style="position: relative;" class="card-header">
                 <h2>
                     {{ task.title }}
                 </h2>
-                <div  class="btn-group btn-group-sm me-3" role="group" aria-label="Task actions">
-                    <a href="{{ url_for('edit_task', task_id=task.id) }}"><button type="button" class="btn btn-outline-primary">Edit</button></a>
-                    <a href="{{ url_for('delete_task', task_id=task.id) }}"><button type="button" class="btn btn-outline-danger">Delete</button></a>
-                    <a href="{{ url_for('complete_task', task_id=task.id) }}"><button id="{{ task.id }}" onclick="Done(this.id)" id="done" type="button" class="btn btn-outline-success">Done</button></a>
+                <div class="btn-group btn-group-sm me-3" role="group" aria-label="Task actions">
+                    <a href="{{ url_for('edit_task', task_id=task.id) }}"><button type="button"
+                            class="btn btn-outline-primary">Edit</button></a>
+                    <a href="{{ url_for('delete_task', task_id=task.id) }}"><button type="button"
+                            class="btn btn-outline-danger">Delete</button></a>
+                    <a href="{{ url_for('complete_task', task_id=task.id) }}"><button id="{{ task.id }}"
+                            onclick="Done(this.id)" id="done" type="button"
+                            class="btn btn-outline-success">Done</button></a>
                 </div>
                 <div style=" position: absolute; top: 0; right: 0; padding: 10px;">
                     {% if task.priority == 'Low' %}

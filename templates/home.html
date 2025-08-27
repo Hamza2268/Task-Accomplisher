@@ -1,8 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container-fluid p-0">
-    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom" style="width:100%">
-        <a href="/user/profile-info"
+<style>
+    a{
+        text-decoration: none;
+    }
+</style>
+<div class="container-fluid p-0 " class="userheader">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom userheader" style="width:100%">
+        <a href="{{ url_for('personal_info') }}"
             class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
             <div class="welcome-photo">
                 <img id="personal-photo" src="{{ url_for('static', filename='profile_pics/' ~ user.photo) }}"
@@ -13,89 +18,33 @@
             <li class="nav-item">
                 <a href="/user/home" class="nav-link active header-list" aria-current="page">Home</a>
             </li>
-            <li class="nav-item header-list"><a href="{{ url_for('add_task') }}" class="nav-link">Tasks</a></li>
-            <li class="nav-item header-list"><a href="/user/inbox" class="nav-link"><button id="inbox" type="button"
-                        class="btn btn position-relative">
-                        Inbox
-                        {% if unread_count %}
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            {{ unread_count }}
-                            <span class="visually-hidden">unread messages</span>
-                        </span>
-                        {% endif %}
-                    </button></a></li>
+            <li class="nav-item header-list"><a href="{{ url_for('view_tasks') }}" id="tasks-btn"
+                    class="nav-link">Tasks</a></li>
         </ul>
     </header>
-    <!-- <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style="width: 380px;"> <a
-            href="/"
-            class="d-flex align-items-center flex-shrink-0 p-3 link-body-emphasis text-decoration-none border-bottom">
-            <svg class="bi pe-none me-2" width="30" height="24" aria-hidden="true">
-                <use xlink:href="#bootstrap"></use>
-            </svg> <span class="fs-5 fw-semibold">List group</span> </a>
-        <div class="list-group list-group-flush border-bottom scrollarea"> <a href="#"
-                class="list-group-item list-group-item-action active py-3 lh-sm" aria-current="true">
-                <div class="d-flex w-100 align-items-center justify-content-between"> <strong class="mb-1">List group
-                        item heading</strong> <small>Wed</small> </div>
-                <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-            </a> <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
-                <div class="d-flex w-100 align-items-center justify-content-between"> <strong class="mb-1">List group
-                        item heading</strong> <small class="text-body-secondary">Tues</small> </div>
-                <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-            </a> <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
-                <div class="d-flex w-100 align-items-center justify-content-between"> <strong class="mb-1">List group
-                        item heading</strong> <small class="text-body-secondary">Mon</small> </div>
-                <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-            </a> <a href="#" class="list-group-item list-group-item-action py-3 lh-sm" aria-current="true">
-                <div class="d-flex w-100 align-items-center justify-content-between"> <strong class="mb-1">List group
-                        item heading</strong> <small class="text-body-secondary">Wed</small> </div>
-                <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-            </a> <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
-                <div class="d-flex w-100 align-items-center justify-content-between"> <strong class="mb-1">List group
-                        item heading</strong> <small class="text-body-secondary">Tues</small> </div>
-                <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-            </a> <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
-                <div class="d-flex w-100 align-items-center justify-content-between"> <strong class="mb-1">List group
-                        item heading</strong> <small class="text-body-secondary">Mon</small> </div>
-                <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-            </a> <a href="#" class="list-group-item list-group-item-action py-3 lh-sm" aria-current="true">
-                <div class="d-flex w-100 align-items-center justify-content-between"> <strong class="mb-1">List group
-                        item heading</strong> <small class="text-body-secondary">Wed</small> </div>
-                <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-            </a> <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
-                <div class="d-flex w-100 align-items-center justify-content-between"> <strong class="mb-1">List group
-                        item heading</strong> <small class="text-body-secondary">Tues</small> </div>
-                <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-            </a> <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
-                <div class="d-flex w-100 align-items-center justify-content-between"> <strong class="mb-1">List group
-                        item heading</strong> <small class="text-body-secondary">Mon</small> </div>
-                <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-            </a> <a href="#" class="list-group-item list-group-item-action py-3 lh-sm" aria-current="true">
-                <div class="d-flex w-100 align-items-center justify-content-between"> <strong class="mb-1">List group
-                        item heading</strong> <small class="text-body-secondary">Wed</small> </div>
-                <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-            </a> <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
-                <div class="d-flex w-100 align-items-center justify-content-between"> <strong class="mb-1">List group
-                        item heading</strong> <small class="text-body-secondary">Tues</small> </div>
-                <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-            </a> <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
-                <div class="d-flex w-100 align-items-center justify-content-between"> <strong class="mb-1">List group
-                        item heading</strong> <small class="text-body-secondary">Mon</small> </div>
-                <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-            </a> </div>
-    </div> -->
 </div>
 
-
-<div class="d-flex justify-content-center align-items-center" style="height:70vh; background: #f8f9fa;">
+<div class="d-flex justify-content-center align-items-center"  style="height:70vh;">
     <div class="text-center px-4">
-        <blockquote class="blockquote">
-            <p class="mb-4" style="font-size: 28px; font-style: italic; color:#333;">
-                "What you seek is seeking you."
-            </p>
-        </blockquote>
-        <figcaption class="blockquote-footer" style="font-size: 20px;">
-            Rumi
-        </figcaption>
+        <div >
+            <blockquote class="blockquote">
+                <p class="mb-4" style="font-size: 28px; font-style: italic; color:#333;">
+                    "What you seek is seeking you."
+                </p>
+            </blockquote>
+            <figcaption class="blockquote-footer" style="font-size: 20px;">
+                Rumi
+            </figcaption>
+            <div style="margin-top: 10px;">
+                <a href="{{ url_for('add_task') }}">
+                <button type="button" class="btn btn-outline-dark btn-lg px-4 me-md-2 header-list"> Add New Goal
+                </button>
+                </a>
+                <a href="{{ url_for('view_tasks') }}" >
+                    <button type="button" class="btn btn-outline-dark btn-lg px-4 header-list">Tasks</button>
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 </body>

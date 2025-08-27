@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(120deg, #ff9a9e 0%, #fad0c4 50%, #a1c4fd 100%);
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #fff;
+    }
+</style>
+{% if form.UserName %}
+<form method="POST" enctype="multipart/form-data" id="changepersonalinfo">
+    {{ form.csrf_token }}
+    {{ form.hidden_tag() }}
+
+    <!-- Title input -->
+    <div class="mb-3">
+        {{ form.UserName.label(class="form-label", for="username") }}
+        {{ form.UserName(class="form-control", placeholder="Enter task title" , id="username")}}
+        {% for error in form.UserName.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.Email.label(class="form-label", for="email") }}
+        {{ form.Email(class="form-control", placeholder="Enter task title" , id="email")}}
+        {% for error in form.Email.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.Phone.label(class="form-label", for="Phone") }}
+        {{ form.Phone(class="form-control", placeholder="Enter task title" , id="Phone")}}
+        {% for error in form.Phone.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.Address.label(class="form-label", for="Address") }}
+        {{ form.Address(class="form-control", placeholder="Enter task title" , id="Address")}}
+        {% for error in form.Address.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.photo.label(class="form-label", for="photo") }}
+        {{ form.photo(class="form-control", placeholder="Enter task title" , id="photo")}}
+        {% for error in form.photo.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="d-grid">
+        <button class="btn btn-primary btn-lg" type="submit">Save</button>
+    </div>
+    <a style="text-decoration: none;" href="{{ url_for('changePassword') }}">
+    <div class="d-grid">
+        <button class="btn btn-primary btn-lg" type="button">Change Password</button>
+    </div></a>
+</form>
+{% else %}
+<form method="POST" action="" id="changepersonalinfo">
+    {{ form.csrf_token }}
+    {{ form.hidden_tag() }}
+
+    <!-- Title input -->
+    <div class="mb-3">
+        {{ form.current_password.label(class="form-label", for="current_password") }}
+        {{ form.current_password(class="form-control", placeholder="Enter current password" , id="current_password")}}
+        {% for error in form.current_password.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.new_password.label(class="form-label", for="new_password") }}
+        {{ form.new_password(class="form-control", placeholder="Enter new password" , id="new_password")}}
+        {% for error in form.new_password.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+    <div class="mb-3">
+        {{ form.confirm_new_password.label(class="form-label", for="confirm_new_password") }}
+        {{ form.confirm_new_password(class="form-control", placeholder="Confirm new password" ,
+        id="confirm_new_password")}}
+        {% for error in form.confirm_new_password.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+    <div class="d-grid">
+        <button class="btn btn-primary btn-lg" type="submit">Change Password</button>
+    </div>
+</form>
+{% endif %}
+{% endblock %}
