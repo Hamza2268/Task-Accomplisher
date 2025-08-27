@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    {% if task %}
+                    <h3>Edit Task✍️</h3>
+                    {% else %}
+                    <h3>New Task😃</h3>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="" id="taskForm">
+                        {{ form.csrf_token }}
+                        {{ form.hidden_tag() }}
+
+                        <!-- Title input -->
+                        <div class="mb-3">
+                            {{ form.title.label(class="form-label", for="title") }}
+                            {% if task %}
+                            {{ form.title(value = task.title ,class="form-control", placeholder="Enter task title" , id="title")}}
+                            {% else %}
+                            {{ form.title(class="form-control", placeholder="Enter task title" , id="title")}}
+                            {% endif %}
+                            {% for error in form.title.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Description input -->
+                        <div class="mb-3">
+                            {{ form.description.label(class="form-label", for="description") }}
+                            <textarea maxlength="200" class="form-control"
+          placeholder="Enter Task Description (optional)" 
+          id="description" name="description">{% if task %}{{ task.description }}{% endif %}</textarea>
+
+                            <!-- {{ form.description(class="form-control", placeholder="Enter Task Description (optional)" , id="description")}} -->
+                            {% for error in form.description.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Deadline input -->
+                        <div class="mb-3">
+                            {{ form.Deadline.label(class="form-label", for="Deadline") }}
+                            {% if task %}
+                            {{ form.Deadline(value="{{task.Deadline}}" ,class="form-select", id="Deadline") }}
+                            {% else %}
+                            {{ form.Deadline(class="form-select", id="Deadline") }}
+                            {% endif %}
+                            {% for error in form.Deadline.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Priority input -->
+                        <div class="mb-3">
+                            {{ form.priority.label(class="form-label") }}
+                            <div>
+                                {% for subfield in form.priority %}
+                                <div class="form-check form-check-inline">
+                                    {{ subfield(class="form-check-input", id=subfield.id) }}
+                                    <label class="form-check-label" for="{{ subfield.id }}">{{ subfield.label.text
+                                        }}</label>
+                                    {% if subfield.label.text == 'Low' %}
+                                        {% set circle_color = 'green' %}
+                                    {% elif subfield.label.text == 'Medium' %}
+                                        {% set circle_color = 'yellow' %}
+                                    {% elif subfield.label.text == 'High' %}
+                                        {% set circle_color = 'red' %}
+                                    {% else %}
+                                        {% set circle_color = 'purple' %}
+                                    {% endif %}
+                                <span class="priority-circle" id="priority-circle" style="background-color: {{ circle_color }};"></span>
+                                
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% for error in form.priority.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="d-grid">
+                            {{ form.Submit(class="btn btn-primary btn-block") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

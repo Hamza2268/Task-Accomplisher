@@ -221,3 +221,46 @@ footer p {
     border: 2px solid #0d6efd;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.header-list {
+    margin-right: 5px;
+}
+
+.header-list:hover {
+    transform: translateY(-10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+#personal-photo:hover {
+    transform: scale(1.1);
+    box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.2);
+}
+
+#inbox {
+    border: #0a58ca solid 3px;
+    border-radius: 1.5 rem;
+}
+
+/* Error Page Styling */
+#error-container{
+    margin-top: 10%; 
+    margin-bottom: 10%;
+}
+
+#description{
+    height: 100px;
+    resize: none;
+}
+
+#priority-circle {
+    display:inline-block;
+    width:20px;
+    height:20px; 
+    border-radius:50%;
+}
+
+.timeline {
+    transition: width 0.5s ease;
+    border-radius: 5px;
+}

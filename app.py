@@ -1,8 +1,10 @@
 # from click import style
-from flask import Flask, redirect, render_template, url_for, request, session
+# from email.policy import default
+from calendar import c
+from flask import Flask, redirect, render_template, url_for, session
 from flask_wtf import FlaskForm
 from sqlalchemy import Null
-from wtforms import StringField, PasswordField, SubmitField, RadioField, FileField
+from wtforms import StringField, PasswordField, SubmitField, RadioField, FileField, SelectField
 from wtforms.validators import DataRequired, Email, Length
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -11,7 +13,8 @@ from werkzeug.utils import secure_filename
 import uuid
 from flask_bcrypt import Bcrypt
 from flask_wtf.file import FileAllowed
-
+from datetime import datetime, timezone
+ 
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -50,6 +53,21 @@ class LoginForm(FlaskForm):
     Password = PasswordField('Password', validators=[DataRequired(), Length(min=8)])
     Submit = SubmitField('Login')
 
+class TaskForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired(), Length(min=3, max=100)])
+    description = StringField('Description', validators=[Length(max=200)])
+    Deadline = SelectField('Deadline (in days)',
+                                choices =  [( '','Choose your appropiate time'), ('1', '1'), ('2', '2'), ('5', '5'), ('10', '10'),
+                                    ('15', '15'), ('20', '20'), ('30', '30')],
+                            validators=[DataRequired()],
+                            default=''
+                            )
+    priority = RadioField('Priority',
+                           choices=[('Low', 'Low'), ('Medium', 'Medium'), ('High', 'High'),('Critical', 'Critical')],
+                             default='Medium',
+                               validators=[DataRequired()])
+    Submit = SubmitField('Add Task')
+
 ##################################### Models #########################################
 ### DB Model
 class User(db.Model):
@@ -65,11 +83,26 @@ class User(db.Model):
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
+    
+class Task(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    StartDate = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
+    EndDate = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp()) #I will use Deadline instead
+    CompletedDate = db.Column(db.DateTime(timezone=True), nullable=True)  # for both boolean and date when the task was actually completed
+    Deadline = db.Column(db.Integer, nullable=False)    # Deadline in days
+    # Completion = db.Column(db.Boolean, default=False, nullable=False)
+    priority = db.Column(db.String(10), nullable=False, default='Medium')
+
+    def __repr__(self):
+        return f"Task('{self.title}', '{self.description}')"
 
 ##################################### Routes #########################################
 
-## current user id
-id = Null 
+# ## current user id
+# id = Null 
 
 @app.route('/')
 def homepage():
@@ -149,7 +182,90 @@ def personal_info():
     user = User.query.get(session['user_id'])
     return render_template('personal_info.html', user=user, title='Personal Info', style='register_signin.css', script='script.js')
 
+@app.route('/user/task')
+def view_tasks():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    user = User.query.get(session['user_id'])
+    tasks = Task.query.filter_by(user_id=session['user_id']).all()
+    return render_template('viewTasks.html', user=user, tasks=tasks, title='Tasks', style='register_signin.css', script='script.js')
+
+### Add New Task Route
+@app.route('/user/task/add', methods=['GET', 'POST'])
+def add_task():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    form = TaskForm()
+    if form.validate_on_submit():
+        task = Task(title=form.title.data,
+                    description=form.description.data,
+                    user_id=session['user_id'],
+                    Deadline=int(form.Deadline.data),
+                    priority=form.priority.data)
+        db.session.add(task)
+        db.session.commit()
+        return redirect(url_for('Home'))
+    return render_template('addTask.html', form=form, title='Add New Task', style='register_signin.css', script='script.js')
+
+# @app.route('/user/task/edit/<int:task_id>', methods=['GET', 'POST'])
+# def edit_task(task_id):
+#     task = Task.query.get_or_404(task_id)
+#     return render_template('edit_task.html', task=task)
+
+
+### Logout Route
 @app.route('/app/logout')
 def logout():
     session.pop('user_id', None)
     return redirect(url_for('homepage'))
+
+### 404 Error Route
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('notFoundError.html', title='404 Error', style='register_signin.css', script='script.js'), 404
+
+@app.route('/user/task/delete/<int:task_id>', methods=['GET'])
+def delete_task(task_id):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    task = Task.query.get_or_404(task_id)
+    if task.user_id != session['user_id']:
+        return "You are not authorized to delete this task.", 403
+    db.session.delete(task)
+    db.session.commit()
+    return redirect(url_for('view_tasks'))
+
+@app.route('/user/task/done/<int:task_id>', methods=['POST'])
+def complete_task(task_id):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    task = Task.query.get_or_404(task_id)
+    if task.user_id != session['user_id']:
+        return "You are not authorized to complete this task.", 403
+    task.CompletedDate = datetime.now(timezone.utc)
+    db.session.commit()
+    return redirect(url_for('view_tasks'))
+
+
+@app.route('/user/task/edit/<int:task_id>', methods=['GET','POST'])
+def edit_task(task_id):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    task = Task.query.get_or_404(task_id)
+    if task.user_id != session['user_id']:
+        return "You are not authorized to complete this task.", 403
+    form = TaskForm()
+    if form.validate_on_submit():
+        task = Task(title=form.title.data,
+                    description=form.description.data,
+                    user_id=session['user_id'],
+                    Deadline=int(form.Deadline.data),
+                    priority=form.priority.data)
+        db.session.add(task)
+        db.session.commit()
+        return redirect(url_for('Home'))
+    return render_template('addTask.html', task=task, form=form, title='Edit Task', style='register_signin.css', script='script.js')
+
+
+
+### The End ###
