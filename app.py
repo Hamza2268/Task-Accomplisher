@@ -328,15 +328,15 @@ def complete_task(task_id):
     db.session.commit()
     return redirect(url_for('view_tasks'))
 
-### 404 Error Route
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('notFoundError.html', title='404 Error', style='register_signin.css', script='script.js'), 404
-
 ### Logout Route
 @app.route('/app/logout')
 def logout():
     session.pop('user_id', None)
     return redirect(url_for('homepage'))
 
-### The End ###
+### 404 Error Route
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('notFoundError.html', title='404 Error', style='register_signin.css', script='script.js'), 404
+
+########################################################## The End ###############################################################
