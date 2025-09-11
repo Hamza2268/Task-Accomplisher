@@ -106,9 +106,14 @@ _(open in new tab)_
 - **User Dashboard** – Displays active and completed tasks.
 <img src="./screenExamples/home.png" width="600" alt="Home"/> 
 
-- **Task Timeline** – Visual progress bar showing deadline tracking.
+- **Task Timeline and Tasks categories** – Visual progress bar showing deadline tracking and Classified into ongoing, completed and overdue.
+<img src="./screenExamples/tasks" width="600" alt="Ongoing Tasks"/> 
+<img src="./screenExamples/tasks2" width="600" alt="Completed and Overdue Tasks"/> 
 
-- **Profile Page** – Edit username, email, phone, address, and photo.
+- **Profile Page** – Edit username, email, phone, address, photo and password.
+<img src="./screenExamples/profile" width="600" alt="Profile"/> 
+<img src="./screenExamples/editInfo" width="600" alt="Edit Info"/> 
+<img src="./screenExamples/tasks2" width="600" alt="Completed and Overdue Tasks"/> 
 
 --- 
 
