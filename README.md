@@ -40,3 +40,16 @@ This makes it suitable for students, professionals, and anyone who wants to **st
 - **Werkzeug `secure_filename`** – Safe file upload handling  
 
 ---
+
+
+---
+
+## ⚙️ Installation & Setup  
+
+Follow these steps to run the project locally:  
+
+1. **Clone the repository**  
+```bash
+git clone https://github.com/yourusername/task-accomplisher.git
+cd task-accomplisher
+
