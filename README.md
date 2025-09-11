@@ -62,9 +62,34 @@ python -m venv venv
 ```bash
 venv\Scripts\activate
 ```
-```bash
 # Mac/Linux
+```bash
 source venv/bin/activate
 ```
+5. **Install dependencies**
+```bash
+pip install -r requirements.txt
+```
+6. **Set up the database**
+```bash
+flask db init
+flask db migrate -m "Initial migration"
+flask db upgrade
+
+```
+7. **Run the application**
+```bash
+
+```
+8. **Open your browser and visit:**
+[Visit Task Accomplisher Docs]([http://127.0.0.1:5000])
+
+
+
+---
+
+Do you also want me to **generate the ready-to-use `requirements.txt`** for you so you can drop it in the repo right away?
+
+
 
 
