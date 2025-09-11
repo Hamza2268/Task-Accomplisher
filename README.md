@@ -36,4 +36,7 @@ This makes it suitable for students, professionals, and anyone who wants to **st
 
 ### Database & File Handling  
 - **SQLite** (default, can be replaced with PostgreSQL or MySQL)  
-- **UUID** – Unique naming for uploaded profile pi
+- **UUID** – Unique naming for uploaded profile pictures
+- **Werkzeug `secure_filename`** – Safe file upload handling  
+
+---
