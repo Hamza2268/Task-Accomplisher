@@ -62,7 +62,7 @@ pip install virtualenv
 python -m venv venv
 ```
 4. **Activate virtual environment**
-> `>`Windows
+>`>` Windows
 ```bash
 venv\Scripts\activate
 ```
