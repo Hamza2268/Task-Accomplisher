@@ -99,6 +99,7 @@ _(open in new tab)_
 ## 📸 Example Screens 
 
 - **Homepage** – Clean landing page with navigation.
+![Homepage](./screenExamples/homepage.png) 
 
 - **User Dashboard** – Displays active and completed tasks.
 
