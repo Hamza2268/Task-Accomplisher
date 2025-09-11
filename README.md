@@ -72,7 +72,6 @@ This makes it suitable for students, professionals, and anyone who wants to **st
 <img src="./screenExamples/profile.png" width="600" alt="Profile"/> 
 <img src="./screenExamples/editInfo.png" width="600" alt="Edit Info"/> 
 ---
----
 
 ## ⚙️ Installation & Setup  
 
