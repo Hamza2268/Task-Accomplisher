@@ -89,10 +89,7 @@ flask --app app run
 [http://127.0.0.1:5000](http://127.0.0.1:5000)
 _(open in new tab)_
 
-
-
-
-Do you also want me to **generate the ready-to-use `requirements.txt`** for you so you can drop it in the repo right away?
+---
 ##🔐 Security Highlights
 
 Passwords are securely hashed using bcrypt (never stored in plain text).
@@ -100,5 +97,8 @@ Passwords are securely hashed using bcrypt (never stored in plain text).
 CSRF protection via Flask-WTF.
 
 Safe file uploads with UUID renaming + secure_filename.
+
+---
+Do you also want me to **generate the ready-to-use `requirements.txt`** for you so you can drop it in the repo right away?
 
 
