@@ -53,11 +53,15 @@ Follow these steps to run the project locally:
 git clone https://github.com/yourusername/task-accomplisher.git
 cd task-accomplisher
 ```
-2. **Create a virtual environment**  
+2. **Install vertual env**  
+```bash
+pip install virtualenv
+```
+3. **Create a virtual environment**  
 ```bash
 python -m venv venv
 ```
-3. **Activate virtual environment**
+4. **Activate virtual environment**
 # Windows
 ```bash
 venv\Scripts\activate
@@ -72,24 +76,29 @@ pip install -r requirements.txt
 ```
 6. **Set up the database**
 ```bash
-flask db init
-flask db migrate -m "Initial migration"
-flask db upgrade
+flask --app app db init
+flask --app app db migrate -m "Initial migration"
+flask --app app db upgrade
 
 ```
 7. **Run the application**
 ```bash
-
+flask --app app run
 ```
 8. **Open your browser and visit:**
 [http://127.0.0.1:5000](http://127.0.0.1:5000)
-_(open in new tab if you like)_
+_(open in new tab)_
 
 
 
 
 Do you also want me to **generate the ready-to-use `requirements.txt`** for you so you can drop it in the repo right away?
+##🔐 Security Highlights
 
+Passwords are securely hashed using bcrypt (never stored in plain text).
 
+CSRF protection via Flask-WTF.
+
+Safe file uploads with UUID renaming + secure_filename.
 
 
