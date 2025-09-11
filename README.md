@@ -90,13 +90,33 @@ flask --app app run
 _(open in new tab)_
 
 ---
-##🔐 Security Highlights
+## 🔐 Security Highlights
 
-Passwords are securely hashed using bcrypt (never stored in plain text).
+- **Passwords are securely hashed** using bcrypt (never stored in plain text).
+- **CSRF protection** – via Flask-WTF. 
+- Safe file uploads with **UUID renaming** – + `secure_filename`.
+---
+## 📸 Example Screens (optional – you can add screenshots later)
 
-CSRF protection via Flask-WTF.
+- **Homepage** – Clean landing page with navigation.
 
-Safe file uploads with UUID renaming + secure_filename.
+- **User Dashboard** – Displays active and completed tasks.
+
+- **Task Timeline** – Visual progress bar showing deadline tracking.
+
+- **Profile Page** – Edit username, email, phone, address, and photo.
+
+--- 
+
+## 🚀 Future Enhancements
+
+- **Email verification & password reset**
+
+- **Task categorization & filtering**
+
+- **Overdue task notifications**
+
+- **Multi-user task collaboration**
 
 ---
 Do you also want me to **generate the ready-to-use `requirements.txt`** for you so you can drop it in the repo right away?
