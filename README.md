@@ -22,23 +22,33 @@ This makes it suitable for students, professionals, and anyone who wants to **st
 ## 🔧 Technologies Used  
 
 ### Backend  
-- **Flask** – Lightweight web framework  
-- **Flask-WTF** – Form handling & validation  
-- **Flask-Bcrypt** – Secure password hashing  
-- **Flask-Migrate** – Database migrations  
+- **Flask** – Lightweight Python web framework for routing and request handling 
+- **Flask-WTF** – Simplifies Form handling & validation  
+- **Flask-Bcrypt** – Secure password hashing for authentication
+- **Flask-Migrate** – Handles Database migrations  
 - **SQLAlchemy** – ORM for database management  
+- **Flask Sessions** – Stores user-specific data (like login state, preferences, or temporary variables) securely between requests, enabling personalized experiences and authentication workflows
 
 ### Frontend  
 - **Custom CSS** – Enhanced styling and animations  
 - **Vanilla JavaScript** – Interactive features (typewriter effect, progress bar animations, password toggle, etc.)  
 - **Bootstrap 5** – Responsive styling & layout  
 - **Bootstrap Icons** – Icon set for better UI  
+- **Responsive Layouts** – Flexible system & media queries ensure usability across devices
 
 ### Database & File Handling  
 - **SQLite** (default, can be replaced with PostgreSQL or MySQL)  
 - **UUID** – Unique naming for uploaded profile pictures
 - **Werkzeug `secure_filename`** – Safe file upload handling  
 
+### ⚙️ Other Core Technologies
+
+- **Jinja2 Templating** – Renders dynamic HTML pages from backend data
+
+- **WTForms CSRF Protection** – Adds extra security to forms against CSRF attacks
+<!-- - **Flask-Login** – Manages user session handling & authentication -->
+
+- **Responsive UI/UX Principles** – Designed mobile-first with accessibility in mind
 ---
 ## 🔐 Security Highlights
 
