@@ -82,7 +82,7 @@ flask db upgrade
 
 ```
 8. **Open your browser and visit:**
-<a href="http://127.0.0.1:5000">http://127.0.0.1:5000</a>
+<a href="http://127.0.0.1:5000" target="__blank">http://127.0.0.1:5000</a>
 
 
 
