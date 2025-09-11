@@ -104,6 +104,7 @@ _(open in new tab)_
 <img src="./screenExamples/homepage3.png" width="600" alt="Homepage"/> 
 
 - **User Dashboard** – Displays active and completed tasks.
+<img src="./screenExamples/home.png" width="600" alt="Home"/> 
 
 - **Task Timeline** – Visual progress bar showing deadline tracking.
 
