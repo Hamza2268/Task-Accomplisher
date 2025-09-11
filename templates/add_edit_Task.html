@@ -18,10 +18,10 @@
         </ul>
     </header>
 </div>
-<div class="container mt-5" >
-    <div class="row justify-content-center" >
+<div class="container mt-5">
+    <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card" id ="add-edit-task-container">
+            <div class="card" id="add-edit-task-container">
                 <div class="card-header text-center">
                     {% if task %}
                     <h3>Edit Task✍️</h3>
@@ -104,7 +104,11 @@
                         </div>
 
                         <div class="d-grid">
+                            {% if task %}
+                            {{ form.SaveSubmit(class="btn btn-primary btn-block") }}
+                            {% else %}
                             {{ form.Submit(class="btn btn-primary btn-block") }}
+                            {% endif %}
                         </div>
                     </form>
                 </div>

@@ -47,12 +47,7 @@
 
     {% if tasks %}
     <div class="list-group">
-        {% for task in tasks %}
-        {% if task.CompletedDate %}
-        {% set cls = 'complete' %}
-        {% else %}
-        {% set cls = '' %}
-        {% endif %}
+        {% for task in onGoingTasks %}
         <div class="card taskCard {{cls}}" id="{{ task.id }}" style="margin-bottom: 20px;">
             <div style="position: relative;" class="card-header">
                 <h2>
@@ -96,6 +91,62 @@
                     </figcaption>
                 </figure>
                 <div style="position: relative;height: 10px;">
+                    <span class="timeline" data-start="{{ task.StartDate.isoformat() }}" 
+                        data-end="{{ task.EndDate.isoformat() }}" data-deadline="{{ task.Deadline }}"
+                        data-completed="{{ task.CompletedDate.isoformat() if task.CompletedDate }}"
+                        style="display:inline-block;position: absolute;top:0;left:0;background-color: red;height:100%"></span>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+
+        <!-- Overdue Tasks: -->
+        {% for task in overdueTasks %}
+        {% set cls = 'overdue' %}
+        <div class="card taskCard {{cls}}" id="{{ task.id }}" style="margin-bottom: 20px;">
+            <div style="position: relative;" class="card-header">
+                <h2>
+                    {{ task.title }}
+                </h2>
+                <div class="btn-group btn-group-sm me-3" role="group" aria-label="Task actions">
+                    <a href="{{ url_for('edit_task', task_id=task.id) }}"><button type="button"
+                            class="btn btn-outline-primary">Edit</button></a>
+                    <a href="{{ url_for('delete_task', task_id=task.id) }}"><button type="button"
+                            class="btn btn-outline-danger">Delete</button></a>
+                    <a href="{{ url_for('complete_task', task_id=task.id) }}"><button id="{{ task.id }}"
+                            onclick="Done(this.id)" id="done" type="button"
+                            class="btn btn-outline-success">Done</button></a>
+                </div>
+                <div style=" position: absolute; top: 0; right: 0; padding: 10px;">
+                    {% if task.priority == 'Low' %}
+                    <span class="badge bg-success">Low</span>
+                    {% elif task.priority == 'Medium' %}
+                    <span class="badge bg-warning text-dark">Medium</span>
+                    {% elif task.priority == 'High' %}
+                    <span class="badge bg-danger">High</span>
+                    {% elif task.priority == 'Critical' %}
+                    <span class="badge bg-dark">Critical</span>
+                    {% endif %}
+                </div>
+                <div style=" position: absolute; top: 30; right: 0; padding: 10px;">
+                    <span class="badge bg-secondary ">Deadline is Over</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <figure>
+                    <blockquote class="blockquote">
+                        <p style="font-weight:500">{{ task.description }}</p>
+                    </blockquote>
+                    <figcaption class="blockquote-footer">
+                        {{ task.Deadline }} days <cite title="Source Title"></cite><br>
+                        Created on: {{ task.StartDate.strftime('%d-%m-%Y') }} ,End on:
+                        {{ task.EndDate.strftime('%d-%m-%Y') }} <br>
+                       
+                        Not completed yet
+                    </figcaption>
+                </figure>
+                <div style="position: relative;height: 10px;">
                     <span class="timeline" data-start="{{ task.StartDate.isoformat() }}"
                         data-end="{{ task.EndDate.isoformat() }}" data-deadline="{{ task.Deadline }}"
                         style="display:inline-block;position: absolute;top:0;left:0;background-color: red;height:100%"></span>
@@ -107,6 +158,63 @@
         </div>
 
         {% endfor %}
+        <!-- Achieved Tasks: -->
+        {% for task in acheivedTasks %}
+        {% set cls = 'complete' %}
+        <div class="card taskCard {{cls}}" id="{{ task.id }}" style="margin-bottom: 20px;">
+            <div style="position: relative;" class="card-header">
+                <h2>
+                    {{ task.title }}
+                </h2>
+                <div class="btn-group btn-group-sm me-3" role="group" aria-label="Task actions">
+                    <a href="{{ url_for('edit_task', task_id=task.id) }}"><button type="button"
+                            class="btn btn-outline-primary">Edit</button></a>
+                    <a href="{{ url_for('delete_task', task_id=task.id) }}"><button type="button"
+                            class="btn btn-outline-danger">Delete</button></a>
+                    <a href="{{ url_for('complete_task', task_id=task.id) }}"><button id="{{ task.id }}"
+                            onclick="Done(this.id)" id="done" type="button"
+                            class="btn btn-outline-success">Done</button></a>
+                </div>
+                <div style=" position: absolute; top: 0; right: 0; padding: 10px;">
+                    {% if task.priority == 'Low' %}
+                    <span class="badge bg-success">Low</span>
+                    {% elif task.priority == 'Medium' %}
+                    <span class="badge bg-warning text-dark">Medium</span>
+                    {% elif task.priority == 'High' %}
+                    <span class="badge bg-danger">High</span>
+                    {% elif task.priority == 'Critical' %}
+                    <span class="badge bg-dark">Critical</span>
+                    {% endif %}
+                </div>
+                <div style=" position: absolute; top: 30; right: 0; padding: 10px;">
+                    <span class="badge bg-success ">Done ✅ </span>
+                </div>
+            </div>
+            <div class="card-body">
+                <figure>
+                    <blockquote class="blockquote">
+                        <p style="font-weight:500">{{ task.description }}</p>
+                    </blockquote>
+                    <figcaption class="blockquote-footer">
+                        {{ task.Deadline }} days <cite title="Source Title"></cite><br>
+                        Created on: {{ task.StartDate.strftime('%d-%m-%Y') }} ,End on:
+                        {{ task.EndDate.strftime('%d-%m-%Y') }} <br>
+                        Completed on: {{ task.CompletedDate.strftime('%d-%m-%Y' ) }}
+                    </figcaption>
+                </figure>
+                <div style="position: relative;height: 10px;">
+                    <span class="timeline" data-start="{{ task.StartDate.isoformat() }}"
+                        data-end="{{ task.EndDate.isoformat() }}" data-deadline="{{ task.Deadline }}"
+                        style="display:inline-block;position: absolute;top:0;left:0;background-color: red;height:100%"></span>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        {% endfor %}
+        
     </div>
     {% else %}
     <p>You have no tasks. <a href="{{ url_for('add_task') }}">Add a new task</a></p>

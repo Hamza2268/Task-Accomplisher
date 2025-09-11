@@ -28,17 +28,22 @@ if (descr.value.length >= 200) {
 }
 
 document.querySelectorAll(".timeline").forEach(el => {
-    if(el.classList.contains("complete") || el.classList.contains("overdue")){
-        return;
-    }
+    if(el.classList.contains("overdue")){
+            el.style.backgroundColor = "#dc3545"; 
+            el.style.width = "100%";
+        
+    } else {
     let start = new Date(el.dataset.start);
     let end = new Date() ;
+    if(el.classList.contains("complete")){
+        end = new Date(el.dataset.completed);
+    }
     let diffDays = Math.floor((end - start) / (1000 * 60 * 60 * 24));
     let deadline = parseInt(el.dataset.deadline, 10);
     let percent = ((diffDays / deadline) * 100);
     console.log((start- end)/(1000 * 60 * 60 * 24));
     console.log(diffDays, deadline, percent);
-    el.style.width = (diffDays > 0) ? (percent + "%") : "1%" ;
+    el.style.width = (diffDays > 0) ? (percent >= 100)?(100 + "%"):(percent + "%") : "1%" ;
     if (percent < 25) {
         el.style.backgroundColor = "#28a745";
     } else if (percent < 50) {
@@ -47,9 +52,11 @@ document.querySelectorAll(".timeline").forEach(el => {
         el.style.backgroundColor = "#fd7e14"; 
     } else if( percent <= 100) {
         el.style.backgroundColor = "#dc3545"; 
-    } else {
-        el.classList.add("overdue");
-    }
+        if (percent == 100) {
+            el.classList.add("overdue");
+        }
+    } 
+}
     
 });
 

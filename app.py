@@ -1,7 +1,7 @@
 ######################################################### Used modules #############################################################
 from flask import Flask, redirect, render_template, url_for,request ,session
 from flask_wtf import FlaskForm
-from sqlalchemy import Null, nullsfirst
+from sqlalchemy import Null, nullsfirst, over
 from wtforms import StringField, PasswordField, SubmitField, RadioField, FileField, SelectField
 from wtforms.validators import DataRequired, Email, Length
 from flask_sqlalchemy import SQLAlchemy
@@ -81,6 +81,7 @@ class TaskForm(FlaskForm):
                              default='Medium',
                                validators=[DataRequired()])
     Submit = SubmitField('Add Task')
+    SaveSubmit = SubmitField('Save')
 
 ######################################################### Models #############################################################
 ### DB Model
@@ -193,9 +194,22 @@ def view_tasks():
         return redirect(url_for('login'))
     user = User.query.get(session['user_id'])
     tasks = Task.query.filter_by(user_id=session['user_id']).order_by(nullsfirst(Task.CompletedDate)).all()
-    acheived = Task.query.filter_by(user_id=session['user_id']).filter(Task.CompletedDate.isnot(None)).count()
+    for task in tasks:
+        today = datetime.now(timezone.utc)
+        end_date = task.EndDate.replace(tzinfo=timezone.utc)
+        # if task.CompletedDate is None:
+        if today > end_date:
+                    task.CompletedDate = datetime(1970, 1, 1, tzinfo=timezone.utc)
+                    db.session.commit()
+                
+    onGoingTasks = Task.query.filter_by(user_id=session['user_id']).filter(Task.CompletedDate.is_(None)).all()
+    acheivedTasks = Task.query.filter_by(user_id=session['user_id']).filter(Task.CompletedDate.isnot(None)).filter(Task.CompletedDate != datetime(1970, 1, 1, tzinfo=timezone.utc)).all()
+    overdueTasks = Task.query.filter_by(user_id=session['user_id']).filter(Task.CompletedDate.isnot(None)).filter(Task.CompletedDate == datetime(1970, 1, 1, tzinfo=timezone.utc)).all()
+
+    acheived = Task.query.filter_by(user_id=session['user_id']).filter(Task.CompletedDate.isnot(None)).filter(Task.CompletedDate != datetime(1970, 1, 1, tzinfo=timezone.utc)).count()
     total = Task.query.filter_by(user_id=session['user_id']).count()
-    return render_template('viewTasks.html', user=user, acheived=acheived, total=total,  tasks=tasks, title='Tasks', style='register_signin.css', script='script.js')
+    return render_template('viewTasks.html', user=user, acheived=acheived, total=total,onGoingTasks = onGoingTasks ,
+                           acheivedTasks = acheivedTasks, overdueTasks=overdueTasks, tasks=tasks, title='Tasks', style='register_signin.css', script='script.js')
 
 ### User Personal Info
 @app.route('/user/personal-info')
