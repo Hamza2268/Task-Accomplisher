@@ -29,10 +29,10 @@ This makes it suitable for students, professionals, and anyone who wants to **st
 - **SQLAlchemy** – ORM for database management  
 
 ### Frontend  
-- **Bootstrap 5** – Responsive styling & layout  
-- **Bootstrap Icons** – Icon set for better UI  
 - **Custom CSS** – Enhanced styling and animations  
 - **Vanilla JavaScript** – Interactive features (typewriter effect, progress bar animations, password toggle, etc.)  
+- **Bootstrap 5** – Responsive styling & layout  
+- **Bootstrap Icons** – Icon set for better UI  
 
 ### Database & File Handling  
 - **SQLite** (default, can be replaced with PostgreSQL or MySQL)  
