@@ -119,6 +119,5 @@ _(open in new tab)_
 - **Multi-user task collaboration**
 
 ---
-Do you also want me to **generate the ready-to-use `requirements.txt`** for you so you can drop it in the repo right away?
 
 
