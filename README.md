@@ -100,7 +100,7 @@ _(open in new tab)_
 
 - **Homepage** – Clean landing page with navigation.
 ![Homepage]
-<img src="./screenshots/homepage.png" width="500" alt="Homepage"/> 
+<img src="./screenExamples/homepage.png" width="500" alt="Homepage"/> 
 
 - **User Dashboard** – Displays active and completed tasks.
 
