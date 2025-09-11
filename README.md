@@ -82,7 +82,7 @@ flask db upgrade
 
 ```
 8. **Open your browser and visit:**
-[Visit Task Accomplisher Docs]([http://127.0.0.1:5000])
+<a href="http://127.0.0.1:5000">http://127.0.0.1:5000</a>
 
 
 
