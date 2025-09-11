@@ -99,12 +99,20 @@ _(open in new tab)_
 ## 📸 Example Screens 
 
 - **Homepage** – Clean landing page with navigation.
+<img src="./screenExamples/homepage.png" width="600" alt="Homepage"/> 
+<img src="./screenExamples/homepage2.png" width="600" alt="Homepage"/> 
+<img src="./screenExamples/homepage3.png" width="600" alt="Homepage"/> 
 
 - **User Dashboard** – Displays active and completed tasks.
+<img src="./screenExamples/home.png" width="600" alt="Home"/> 
 
-- **Task Timeline** – Visual progress bar showing deadline tracking.
+- **Task Timeline and Tasks categories** – Visual progress bar showing deadline tracking and Classified into ongoing, completed and overdue.
+<img src="./screenExamples/tasks.png" width="600" alt="Ongoing Tasks"/> 
+<img src="./screenExamples/tasks2.png" width="600" alt="Completed and Overdue Tasks"/> 
 
-- **Profile Page** – Edit username, email, phone, address, and photo.
+- **Profile Page** – Edit username, email, phone, address, photo and password.
+<img src="./screenExamples/profile.png" width="600" alt="Profile"/> 
+<img src="./screenExamples/editInfo.png" width="600" alt="Edit Info"/> 
 
 --- 
 
