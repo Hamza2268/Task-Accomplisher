@@ -37,7 +37,7 @@ This makes it suitable for students, professionals, and anyone who wants to **st
 - **Responsive Layouts** – Flexible system & media queries ensure usability across devices
 
 ### Database & File Handling  
-- **SQLite** (default, can be replaced with PostgreSQL or MySQL)  
+- **SQLite**   
 - **UUID** – Unique naming for uploaded profile pictures
 - **Werkzeug `secure_filename`** – Safe file upload handling  
 
