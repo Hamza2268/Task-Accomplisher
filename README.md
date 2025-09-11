@@ -58,8 +58,8 @@ cd task-accomplisher
 python -m venv venv
 ```
 3. **Activate virtual environment**
-```bash
 # Windows
+```bash
 venv\Scripts\activate
 ```
 ```bash
