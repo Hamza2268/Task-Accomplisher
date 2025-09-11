@@ -52,4 +52,14 @@ Follow these steps to run the project locally:
 ```bash
 git clone https://github.com/yourusername/task-accomplisher.git
 cd task-accomplisher
+```
+2. **Create and activate a virtual environment**  
+```bash
+python -m venv venv
+# Windows
+venv\Scripts\activate
+# Mac/Linux
+source venv/bin/activate
+```
+
 
