@@ -40,6 +40,38 @@ This makes it suitable for students, professionals, and anyone who wants to **st
 - **Werkzeug `secure_filename`** – Safe file upload handling  
 
 ---
+## 🔐 Security Highlights
+
+- **Passwords are securely hashed** using bcrypt (never stored in plain text).
+- **CSRF protection** – via Flask-WTF. 
+- Safe file uploads with **UUID renaming** – + `secure_filename`.
+---
+## 📸 Example Screens 
+
+- **Homepage** – Clean landing page with navigation.
+<img src="./screenExamples/homepage.png" width="600" alt="Homepage"/> 
+<img src="./screenExamples/homepage2.png" width="600" alt="Homepage"/> 
+<img src="./screenExamples/homepage3.png" width="600" alt="Homepage"/>
+
+- **User Dashboard** – Displays active and completed tasks.
+<img src="./screenExamples/home.png" width="600" alt="Home"/>
+
+- **Registeration and Log in** – Easy apply for Registeration and log in
+<img src="./screenExamples/register.png" width="600" alt="Registeration"/> 
+<img src="./screenExamples/logIn.png" width="600" alt="Loging in"/> 
+
+- **Add, Edit and Delete Tasks** – with the ability to mark **Done**
+<img src="./screenExamples/addTask.png" width="600" alt="Add Tasks"/> 
+<img src="./screenExamples/editTask.png" width="600" alt="Edit Tasks"/> 
+
+- **Task Timeline and Tasks categories** – Visual progress bar showing deadline tracking and Classified into ongoing, completed and overdue.
+<img src="./screenExamples/tasks.png" width="600" alt="Ongoing Tasks"/> 
+<img src="./screenExamples/tasks2.png" width="600" alt="Completed and Overdue Tasks"/> 
+
+- **Profile Page** – Edit username, email, phone, address, photo and password.
+<img src="./screenExamples/profile.png" width="600" alt="Profile"/> 
+<img src="./screenExamples/editInfo.png" width="600" alt="Edit Info"/> 
+---
 
 
 ---
@@ -89,38 +121,6 @@ flask --app app run
 [http://127.0.0.1:5000](http://127.0.0.1:5000)
 _(open in new tab)_
 
----
-## 🔐 Security Highlights
-
-- **Passwords are securely hashed** using bcrypt (never stored in plain text).
-- **CSRF protection** – via Flask-WTF. 
-- Safe file uploads with **UUID renaming** – + `secure_filename`.
----
-## 📸 Example Screens 
-
-- **Homepage** – Clean landing page with navigation.
-<img src="./screenExamples/homepage.png" width="600" alt="Homepage"/> 
-<img src="./screenExamples/homepage2.png" width="600" alt="Homepage"/> 
-<img src="./screenExamples/homepage3.png" width="600" alt="Homepage"/>
-
-- **User Dashboard** – Displays active and completed tasks.
-<img src="./screenExamples/home.png" width="600" alt="Home"/>
-
-- **Registeration and Log in** – Easy apply for Registeration and log in
-<img src="./screenExamples/register.png" width="600" alt="Registeration"/> 
-<img src="./screenExamples/logIn.png" width="600" alt="Loging in"/> 
-
-- **Add, Edit and Delete Tasks** – with the ability to mark **Done**
-<img src="./screenExamples/addTask.png" width="600" alt="Add Tasks"/> 
-<img src="./screenExamples/editTask.png" width="600" alt="Edit Tasks"/> 
-
-- **Task Timeline and Tasks categories** – Visual progress bar showing deadline tracking and Classified into ongoing, completed and overdue.
-<img src="./screenExamples/tasks.png" width="600" alt="Ongoing Tasks"/> 
-<img src="./screenExamples/tasks2.png" width="600" alt="Completed and Overdue Tasks"/> 
-
-- **Profile Page** – Edit username, email, phone, address, photo and password.
-<img src="./screenExamples/profile.png" width="600" alt="Profile"/> 
-<img src="./screenExamples/editInfo.png" width="600" alt="Edit Info"/> 
 
 --- 
 
