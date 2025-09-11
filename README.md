@@ -96,7 +96,7 @@ _(open in new tab)_
 - **CSRF protection** – via Flask-WTF. 
 - Safe file uploads with **UUID renaming** – + `secure_filename`.
 ---
-## 📸 Example Screens (optional – you can add screenshots later)
+## 📸 Example Screens 
 
 - **Homepage** – Clean landing page with navigation.
 
