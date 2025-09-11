@@ -70,7 +70,8 @@ This makes it suitable for students, professionals, and anyone who wants to **st
 
 - **Profile Page** – Edit username, email, phone, address, photo and password.
 <img src="./screenExamples/profile.png" width="600" alt="Profile"/> 
-<img src="./screenExamples/editInfo.png" width="600" alt="Edit Info"/> 
+<img src="./screenExamples/editInfo.png" width="600" alt="Edit Info"/>
+
 ---
 
 ## ⚙️ Installation & Setup  
