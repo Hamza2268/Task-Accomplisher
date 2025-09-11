@@ -1,7 +1,7 @@
 ######################################################### Used modules #############################################################
 from flask import Flask, redirect, render_template, url_for,request ,session
 from flask_wtf import FlaskForm
-from sqlalchemy import Null, nullsfirst, over
+from sqlalchemy import Null, nullsfirst
 from wtforms import StringField, PasswordField, SubmitField, RadioField, FileField, SelectField
 from wtforms.validators import DataRequired, Email, Length
 from flask_sqlalchemy import SQLAlchemy
