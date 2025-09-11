@@ -82,7 +82,7 @@ flask db upgrade
 
 ```
 8. **Open your browser and visit:**
-<a href="http://127.0.0.1:5000" target="_blank">http://127.0.0.1:5000</a>
+[http://127.0.0.1:5000](http://127.0.0.1:5000)
 
 
 [OpenAI](https://openai.com) _(opens in new tab)_
