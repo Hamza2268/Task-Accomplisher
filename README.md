@@ -84,7 +84,7 @@ This makes it suitable for students, professionals, and anyone who wants to **st
 - **Profile Page** – Edit username, email, phone, address, photo and password.
 <img src="./screenExamples/profile.png" width="600" alt="Profile"/> 
 <img src="./screenExamples/editInfo.png" width="600" alt="Edit Info"/>
-<img src="./screenExamples/editinfochangepassword.png" width="600" alt="Change Password"/>
+<img src="./screenExamples/editinforesetpassword.png" width="600" alt="Change Password"/>
 
 - **Forget Password Reset** – Reset password via Email
 <img src="./screenExamples/emailresetpassword.png" width="600" alt="Reset Password"/>
