@@ -2,7 +2,7 @@
 # 📝 Task Accomplisher  
 
 **Task Accomplisher** is a full-stack **Flask-based web application** designed to help users organize, track, and complete their tasks efficiently. It provides an intuitive dashboard where users can add, edit, delete, and monitor tasks with deadlines, while also keeping track of their progress through a visual timeline and achievement bar. The app also supports user authentication, secure profile management, and a responsive design for a smooth experience across devices.
-With **Remember Me** Stay logged in securely across sessions with our “Remember Me” feature—no more repeated logins! and **Password Reset Power**: Forgot your password? Instantly reset it with secure **Email links**
+With **Remember Me** Stay logged in securely across sessions with our Remember Me feature—no more repeated logins! and **Password Reset Power**: Forgot your password? Instantly reset it with secure **Email links**
 
 ---
 
