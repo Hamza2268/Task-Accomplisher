@@ -423,3 +423,14 @@ footer p {
     position: relative;
     top: 20px;
 }
+
+@media (max-width:780px) {
+    .welcome-photo {
+         margin: 0;
+        position: absolute;
+        left: 0;
+    }
+    #homepagePhoto{
+        width: 100%;
+    }
+}

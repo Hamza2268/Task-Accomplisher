@@ -1,9 +1,11 @@
 ######################################################### Used modules #############################################################
-from flask import Flask, redirect, render_template, url_for,request ,session
+# from turtle import title
+from click import Abort
+from flask import Flask, make_response, redirect, render_template, render_template_string, url_for, request, session, flash, current_app
 from flask_wtf import FlaskForm
 from sqlalchemy import Null, nullsfirst
 from wtforms import StringField, PasswordField, SubmitField, RadioField, FileField, SelectField
-from wtforms.validators import DataRequired, Email, Length
+from wtforms.validators import DataRequired, Email, Length, EqualTo
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import os
@@ -12,10 +14,19 @@ import uuid
 from flask_bcrypt import Bcrypt
 from flask_wtf.file import FileAllowed
 from datetime import datetime, timezone, timedelta
+from flask_mailman import EmailMessage, Mail
+from itsdangerous import BadSignature, SignatureExpired, URLSafeTimedSerializer
+
  
 ####################################################### App Initialization #####################################################
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
+
+mail = Mail()  # create Mail instance
+
+####################### Here Configure Flask-Mailman to use SendGrid SMTP #######################
+
+# mail.init_app(app)  # link Mailman with Flask app
 
 ### File Upload Configuration
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -47,7 +58,7 @@ class RegisterForm(FlaskForm):
 
 ##### Login Form
 class LoginForm(FlaskForm):
-    Email = StringField('Email', validators=[DataRequired(), Length(min=3, max=20)])
+    Email = StringField('Email', validators=[DataRequired(), Email()])
     Password = PasswordField('Password', validators=[DataRequired(), Length(min=8)])
     Submit = SubmitField('Login')
 
@@ -67,6 +78,19 @@ class ChangePasswordForm(FlaskForm):
     confirm_new_password = PasswordField('Confirm New Password', validators=[DataRequired(), Length(min=8)])
     Submit = SubmitField('Change Password')
 
+### Email verification form
+class ResetPasswordEmailForm(FlaskForm):
+    Email = StringField('Email', validators=[DataRequired(), Email()])
+    Submit = SubmitField('Reset Password')
+
+class ResetPasswordForm(FlaskForm):
+    newPassword = PasswordField("New Password", validators=[DataRequired(), Length(min=8, message="Password must be at least 8 characters long")])
+    confirmNewPassword = PasswordField(
+        "Confirm New Password", validators=[DataRequired(), EqualTo("newPassword",message="Passwords must match!")]
+    )
+    Submit = SubmitField('Change Password')
+
+### Task creation form
 class TaskForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired(), Length(min=3, max=100)])
     description = StringField('Description', validators=[Length(max=200)])
@@ -84,21 +108,50 @@ class TaskForm(FlaskForm):
     SaveSubmit = SubmitField('Save')
 
 ######################################################### Models #############################################################
-### DB Model
+################ DB Model
+### User Model
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(70), nullable=False)
     password = db.Column(db.String(60), nullable=False)
-    photo = db.Column(db.String(20), nullable=True, default='default.jpg')
+    photo = db.Column(db.String(20), nullable=True, default='default/default.png')
     Address = db.Column(db.String(100), nullable=False)
     Phone = db.Column(db.String(15), nullable=False)
     gender = db.Column(db.String(1), nullable=False)
+
+    
+    def generate_reset_password_token(self):
+        serializer = URLSafeTimedSerializer(app.config["SECRET_KEY"])
+        return serializer.dumps(self.email, salt=self.password)
+
+    @staticmethod
+    def validate_reset_password_token(token: str, user_id: int):
+        user = db.session.get(User, user_id)
+
+        if user is None:
+            return None
+
+        serializer = URLSafeTimedSerializer(current_app.config["SECRET_KEY"])
+        try:
+            token_user_email = serializer.loads(
+                token,
+                max_age=current_app.config["RESET_PASS_TOKEN_MAX_AGE"],
+                salt=user.password,
+            )
+        except (BadSignature, SignatureExpired):
+            return None
+
+        if token_user_email != user.email:
+            return None
+
+        return user
     
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
-    
+
+### Task Model 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
@@ -108,19 +161,49 @@ class Task(db.Model):
     EndDate = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp()) #I will use Deadline instead
     CompletedDate = db.Column(db.DateTime(timezone=True), nullable=True)  # for both boolean and date when the task was actually completed
     Deadline = db.Column(db.Integer, nullable=False)    # Deadline in days
-    # Completion = db.Column(db.Boolean, default=False, nullable=False)
     priority = db.Column(db.String(10), nullable=False, default='Medium')
 
     def __repr__(self):
         return f"Task('{self.title}', '{self.description}')"
 
+### RMB Token Model
+class Token(db.Model):
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    token = db.Column(db.String(100), primary_key=True, nullable=False, unique=True)
+    expiration = db.Column(db.DateTime, nullable=False)
+
+    def __repr__(self):
+        return f"Token('{self.user_id}')"
+    
+### Send Email function
+from templates.reset_password_email_content import (
+    reset_password_email_html_content
+)
+def Send_Reset_Password_Email(user):
+    reset_password_url = url_for(
+        "reset_password",
+        token=user.generate_reset_password_token(),
+        user_id=user.id,
+        _external=True,
+    )
+
+    email_body = render_template_string(
+        reset_password_email_html_content, reset_password_url=reset_password_url
+    )
+
+    message = EmailMessage(
+        subject="Reset your password",
+        body=email_body,
+        to=[user.email],
+    )
+    message.content_subtype = "html"
+
+    message.send()
 
 ######################################################### Routes #############################################################
 ### HomePage for the Web info
 @app.route('/')
 def homepage():
-    global id
-    id = Null
     return render_template('homepage.html')
 
 ### Registeration route
@@ -130,14 +213,16 @@ def register():
     # if request.method == 'POST':
     if form.validate_on_submit():
         photo_file = form.photo.data
+        unique_filename = None
         if photo_file:
             # give it a safe + unique name
             filename = secure_filename(photo_file.filename)
             unique_filename = str(uuid.uuid4()) + "_" + filename
             photo_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
             photo_file.save(photo_path)
-        else:
-            unique_filename = "default.jpg"
+        # else:
+        #     unique_filename = "default/default.png"
+
         if form.Password.data != form.confirm_password.data:
             form.Password.errors.append("Passwords do not match")
             return render_template('register.html', form=form, title='Registeration Form', style='register_signin.css')
@@ -173,9 +258,44 @@ def login():
         user = User.query.filter_by(email=form.Email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.Password.data):
             session['user_id'] = user.id
+
+            ### Setting remmember me cookie
+           
+            if request.form.get("remember-me"):
+                print("Remember Me is checked")
+                resp = make_response("", 204) 
+                token = str(user.id) + "_" + str(uuid.uuid4())
+                expiration = datetime.now(timezone.utc) + timedelta(days=30)
+                hashed_Token = bcrypt.generate_password_hash(token.split("_")[1]).decode('utf-8')
+                token_entry = Token(user_id=user.id, token=hashed_Token, expiration=expiration)
+                db.session.add(token_entry)
+                db.session.commit()
+                resp = redirect(url_for("Home"))
+                resp.set_cookie('TOKEN', token, expires=expiration)
+                return resp
+            #############################################
             return redirect(url_for('Home'))
         else:
             form.Email.errors.append("Invalid username or password")
+            # return render_template("login.html", form=form, title='Login', style='register_signin.css', script='script.js')
+######################################## Remember Me Cookie Check ##################################################
+    ### Check if remember me cookie exists
+    rmb_me = request.cookies.get('TOKEN')
+    if rmb_me:
+        UserRmb, RmbToken  = rmb_me.split("_")
+        print(UserRmb + " and " + RmbToken)
+        user = User.query.filter_by(id=int(UserRmb)).first()
+        if not user:
+            return render_template("login.html", form=form, title='Login', style='register_signin.css', script='script.js')
+        token_entry = Token.query.filter_by(user_id=user.id).all()
+        for entry in token_entry:
+            if entry.expiration.replace(tzinfo=timezone.utc) < datetime.now(timezone.utc):
+                db.session.delete(entry)
+                db.session.commit()
+            elif bcrypt.check_password_hash(entry.token,RmbToken): #entry.token == int(RmbToken):
+                session['user_id'] = user.id
+                return redirect(url_for('Home'))  
+    ###############################################
     return render_template("login.html", form=form, title='Login', style='register_signin.css', script='script.js')
 
 ###################################################### User Path ########################################################
@@ -288,7 +408,7 @@ def add_task():
                     priority=form.priority.data)
         db.session.add(task)
         db.session.commit()
-        return redirect(url_for('Home'))
+        return redirect(url_for('view_tasks'))
     return render_template('add_edit_Task.html',user= user, form=form, title='Add New Task', style='register_signin.css', script='script.js')
 
 ### Edit Task content
@@ -342,11 +462,68 @@ def complete_task(task_id):
     db.session.commit()
     return redirect(url_for('view_tasks'))
 
+### Forget Password Route
+@app.route('/user/forget-password', methods=["GET", "POST"])
+def ForgetPassword():
+    if session.get('user_id'):
+        redirect(url_for('Home'))
+    form = ResetPasswordEmailForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.Email.data).first()
+
+        if user:
+            Send_Reset_Password_Email(user)
+        flash(  
+            "Instructions to reset your password were sent to your Email address, "
+            "if it exists in our system."
+        )
+        return redirect(url_for('ForgetPassword'))
+    return render_template('forgetpassword.html', title='Reset Password', form=form)
+
+
+@app.route("/user/forget-password/reset_password/<token>/<int:user_id>", methods=["GET", "POST"])
+def reset_password(token, user_id):
+    if session.get('user_id'):
+        return redirect(url_for("Home"))
+
+    user = User.validate_reset_password_token(token, user_id)
+    if not user:
+        Abort(404)
+
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.newPassword.data).decode('utf-8')
+        user.password= hashed_password
+        db.session.commit()
+
+        return render_template(
+            'successful.html',msg='Password Changed successfully', title='Reset Password Successfully', style='register_signin.css'
+        )
+
+    return render_template(
+        "forgetpassword.html", title="Reset Password", form=form
+    )
+
 ### Logout Route
 @app.route('/app/logout')
 def logout():
     session.pop('user_id', None)
+    rmb_me = request.cookies.get('TOKEN')
+    if rmb_me:
+        UserRmb, RmbToken  = rmb_me.split("_")
+        user = User.query.filter_by(id=int(UserRmb)).first()
+        if not user:
+                return redirect(url_for('homepage'))
+        resp = redirect(url_for('homepage'))
+        token_entry = Token.query.filter_by(user_id=user.id).all()
+        for entry in token_entry:
+            if entry.expiration.replace(tzinfo=timezone.utc) < datetime.now(timezone.utc) or bcrypt.check_password_hash(entry.token,RmbToken):
+                db.session.delete(entry)
+                db.session.commit() 
+        resp.delete_cookie('TOKEN')
+        return resp
     return redirect(url_for('homepage'))
+    
 
 ### 404 Error Route
 @app.errorhandler(404)

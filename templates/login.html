@@ -12,22 +12,45 @@
         <div class="col-md-10 mx-auto col-lg-5">
             <form method="post" class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
                 {{ form.csrf_token }}
-                <div class="form-floating mb-3"> 
-                        {{ form.Email(class="form-control", id="floatingUserName", placeholder="name@example.com") }}
-                    <!-- <input type="email" class="form-control" id="floatingInput"
-                        placeholder="name@example.com"> -->
-                         <label for="floatingInput">Email address</label> </div>
-                <div class="form-floating mb-3"> 
-                        {{ form.Password(class="form-control fa-eye", id="floatingPassword", placeholder="Password") }}
-                    <!-- <input type="password" class="form-control" id="floatingPassword"
-                        placeholder="Password"> -->
-                         <label for="floatingPassword">Password</label> 
-                        <div class="fa fa-eye" id="togglePassword" style="position: absolute; right: 10px; top: 20px; cursor: pointer;scale:1.2;">👀</div>
-                        </div>
-                <div class="checkbox mb-3"> <label> <input type="checkbox" value="remember-me"> Remember me
-                    </label> </div> <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
-                    <!-- <hr class="my-4"> -->
-                <small style="margin: 10px 5px;" class="text-body-secondary">Don't Have an account? <a href="{{ url_for('register') }}">Sign
+                <div class="form-floating mb-3">
+                    {{ form.Email(class="form-control", id="floatingUserName", placeholder="name@example.com") }}
+                    <label for="floatingInput">Email address</label>
+                </div>
+                {% if form.Email.errors %}
+                <div class="alert alert-danger  d-flex align-items-center" role="alert">
+                    <svg style="margin-right: 5px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                    </svg>
+                    <div>
+                        {{ form.Email.errors[0] }}
+                    </div>
+                </div>
+
+                {% endif %}
+                <div class="form-floating mb-3">
+                    {{ form.Password(class="form-control fa-eye", id="floatingPassword", placeholder="Password") }}
+                    <label for="floatingPassword">Password</label>
+                    <div class="fa fa-eye" id="togglePassword"
+                        style="position: absolute; right: 10px; top: 20px; cursor: pointer;scale:1.2;">
+                            👀
+                    </div>
+                </div>
+                <div class="checkbox mb-2">
+                    <label>
+                        <input type="checkbox" value="remember-me" name="remember-me" id="remember-me">
+                        Remember me
+                    </label>
+                </div>
+                <div class="mb-2">
+                    <a class="link-underline-secondary" href=" {{url_for('ForgetPassword')}} ">
+                    <small style="margin: 10px 5px;" class="text-body-secondary">Forget Password</small>
+                </a>
+                </div>
+                <button class="w-100 btn btn-lg btn-primary" type="submit">Log in</button>
+                <small style="margin: 10px 5px;" class="text-body-secondary">Don't Have an account? <a
+                        href="{{ url_for('register') }}">Sign
                         up</a></small>
                 <hr class="my-4"> <small class="text-body-secondary">By clicking Sign up, you agree to the terms of
                     use.</small>

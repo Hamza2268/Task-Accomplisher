@@ -13,8 +13,15 @@
 
 <div class="container col-xxl-8 px-4 py-5">
     <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-        <div  class="col-10 col-sm-8 col-lg-6"> <img id="personal-info-pic"  src="{{ url_for('static', filename='profile_pics/' ~ user.photo) }}" class="d-block mx-lg-auto img-fluid"
-                alt="{{ user.username }}" width="700" loading="lazy"> </div>
+        <div  class="col-10 col-sm-8 col-lg-6"> 
+            {% if user.photo == 'default/default.png' or user.photo is none %}
+                <img id="personal-info-pic" src="{{ url_for('static', filename='default/default.png') }}"
+                     class="d-block mx-lg-auto img-fluid" alt="Profile Picture"  width="700" loading="lazy"> 
+            {% else %}
+                <img id="personal-info-pic"  src="{{ url_for('static', filename='profile_pics/' ~ user.photo) }}" class="d-block mx-lg-auto img-fluid"
+                    alt="{{ user.username }}" width="700" loading="lazy">
+            {% endif %}
+        </div>
         <div class="col-lg-6">
             <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3" id="user-name"> {{user.username}} </h1> 
             <div class="personal lead">Email: {{user.email}}</div>

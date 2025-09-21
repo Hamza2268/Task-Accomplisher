@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <!-- data-bs-theme="dark"> -->
 
 <head>
@@ -14,21 +14,20 @@
 </head>
 
 <body>
-    <div id="home" class="container" >
+    <div class="container" style="position: fixed; top:0; z-index:999;width:100%;left:0;right:0;">
         <header
             class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom" id="header">
-            <div class="col-md-3 mb-2 mb-md-0">
+            <div class="col-md-3 mb-2 mb-md-0 d-none d-lg-block">
                 <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
                     <svg class="bi" width="40" height="32" role="img">
                     </svg>
                 </a>
             </div>
-            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#home" class="nav-link px-2 link-secondary">Home</a></li>
+            <ul class="nav col-10 col-md-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="#home" class="nav-link px-2">Home</a></li>
                 <li><a href="#features" class="nav-link px-2">Features</a></li>
-                <li><a href="#us" class="nav-link px-2">Us</a></li>
-                <!-- <li><a href="#" class="nav-link px-2">FAQs</a></li> -->
                 <li><a href="#about" class="nav-link px-2">About</a></li>
+                <li><a href="#us" class="nav-link px-2">Us</a></li>
             </ul>
             <div class="col-md-3 text-end">
                 <a style="text-decoration: none;" href="/app/login">
@@ -43,10 +42,10 @@
         </header>
     </div>
 
-    <div class="container col-xxl-8 px-4 py-5">
+    <div  id="home" class="container col-xxl-8 px-4 py-5 " style="margin-top: 70px;">
         <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-            <div class="col-10 col-sm-8 col-lg-6">
-                <img src="https://media.istockphoto.com/id/1386702753/vector/hands-with-checklist-cartoon-concept-with-arms-holding-organizer-and-writing-check-marks-day.jpg?s=2048x2048&w=is&k=20&c=LOhvCdgYpBsNpSPlBIThS9LnlSQE7-793W_f8u617ss="
+            <div id="homepagePhoto" class="col-12  col-lg-6">
+                <img  src="https://media.istockphoto.com/id/1386702753/vector/hands-with-checklist-cartoon-concept-with-arms-holding-organizer-and-writing-check-marks-day.jpg?s=2048x2048&w=is&k=20&c=LOhvCdgYpBsNpSPlBIThS9LnlSQE7-793W_f8u617ss="
                     class="d-block mx-lg-auto img-fluid hero-img" alt="to do list" width="700" height="500"
                     loading="lazy">
             </div>
@@ -68,8 +67,8 @@
         </div>
     </div>
 
-    <div class="container px-4 py-5" id="featured-3">
-        <h2 id="features" class="pb-2 border-bottom">Features</h2>
+    <div id="features" class="container px-4 py-5" id="featured-3">
+        <h2 class="pb-2 border-bottom">Features</h2>
         <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
 
             <div class="feature col">
@@ -86,11 +85,6 @@
                 <h3 class="fs-2 text-body-emphasis">Smart Task Management</h3>
                 <p>Easily create, categorize, and prioritize tasks. Our AI-powered system helps break down large goals
                     into smaller steps automatically.</p>
-                <!-- <a href="#" class="icon-link">Explore
-                    <svg class="bi" aria-hidden="true">
-                        <use xlink:href="#chevron-right"></use>
-                    </svg>
-                </a> -->
             </div>
 
             <div class="feature col">
@@ -107,11 +101,6 @@
                 <h3 class="fs-2 text-body-emphasis">Sync & Smart Reminders</h3>
                 <p>Stay on top of your to-dos anywhere. All tasks sync across devices with intelligent reminders that
                     notify you at the right time.</p>
-                <!-- <a href="#" class="icon-link">See how
-                    <svg class="bi" aria-hidden="true">
-                        <use xlink:href="#chevron-right"></use>
-                    </svg>
-                </a> -->
             </div>
 
             <div class="feature col">
@@ -126,11 +115,6 @@
                 <h3 class="fs-2 text-body-emphasis">Productivity Insights</h3>
                 <p>Track your progress with daily and weekly insights. Visualize your productivity with charts and
                     streaks to stay motivated.</p>
-                <!-- <a href="#" class="icon-link">View insights
-                    <svg class="bi" aria-hidden="true">
-                        <use xlink:href="#chevron-right"></use>
-                    </svg>
-                </a> -->
             </div>
         </div>
     </div>

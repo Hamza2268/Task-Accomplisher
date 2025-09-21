@@ -61,9 +61,25 @@ document.querySelectorAll(".timeline").forEach(el => {
 });
 
 let toggle = document.querySelector("#togglePassword");
+let toggleConfirm = document.querySelector("#togglePasswordConfirm");
 if (toggle)
 toggle.addEventListener("click", function () {
+    console.log('yu[p')
         let input = document.getElementById("floatingPassword");
+        if (input.type === "password") {
+            input.type = "text";
+            this.classList.remove("fa-eye");
+            this.classList.add("fa-eye-slash");
+        } else {
+            input.type = "password";
+            this.classList.remove("fa-eye-slash");
+            this.classList.add("fa-eye");
+        }
+    });
+
+if (toggleConfirm)
+toggleConfirm.addEventListener("click", function () {
+        let input = document.getElementById("confirm_new_password");
         if (input.type === "password") {
             input.type = "text";
             this.classList.remove("fa-eye");
@@ -88,4 +104,27 @@ if(achievment){
     achievment.style.width = percent + "%";
     achievment.classList.add("bg-success");
 
+}
+
+let home = document.getElementById('home')
+let features = document.getElementById('features')
+let about = document.getElementById('about')
+let us = document.getElementById('why-us')
+let nav = document.querySelectorAll('header ul li a')
+if(us){
+    document.onscroll = () => {
+        nav.forEach((nv) => {
+        nv.classList.remove('link-secondary')
+    })
+    if(window.scrollY - parseInt(home.style.marginTop) <= home.offsetHeight){
+        nav[0].classList.add('link-secondary')
+    } else if(Math.round(window.scrollY - parseInt(home.style.marginTop)) < home.offsetHeight + features.offsetHeight) {
+        nav[1].classList.add('link-secondary')
+    } else if(window.scrollY - parseInt(home.style.marginTop) <= home.offsetHeight + features.offsetHeight + about.offsetHeight) {
+        nav[2].classList.add('link-secondary')
+    } else {
+        nav[3].classList.add('link-secondary')
+    }
+    }
+    
 }

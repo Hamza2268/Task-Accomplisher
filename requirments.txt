@@ -1,0 +1,11 @@
+click
+Flask
+Flask-WTF
+SQLAlchemy
+WTForms
+Flask-SQLAlchemy
+Flask-Migrate
+Werkzeug
+Flask-Bcrypt
+Flask-Mailman
+itsdangerous

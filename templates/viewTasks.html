@@ -5,25 +5,8 @@
         text-decoration: none;
     }
 </style>
+{% include 'partials/UserHeader.html' %}
 
-<div class="container-fluid p-0">
-    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom" style="width:100%">
-        <a href="{{ url_for('personal_info') }}"
-            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-            <div class="welcome-photo">
-                <img id="personal-photo" src="{{ url_for('static', filename='profile_pics/' ~ user.photo) }}"
-                    alt="{{ user.username }}">
-            </div>
-        </a>
-        <ul class="nav nav-pills">
-            <li class="nav-item">
-                <a href="/user/home" class="nav-link active header-list" aria-current="page">Home</a>
-            </li>
-            <li class="nav-item header-list"><a href="{{ url_for('view_tasks') }}" id="tasks-btn"
-                    class="nav-link">Tasks</a></li>
-        </ul>
-    </header>
-</div>
 <div class="container mt-5">
     {% if total %}
     <div style="margin-top: 0;">

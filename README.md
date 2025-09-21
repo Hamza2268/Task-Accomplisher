@@ -68,7 +68,7 @@ This makes it suitable for students, professionals, and anyone who wants to **st
 
 - **Registeration and Log in** – Easy apply for Registeration and log in
 <img src="./screenExamples/register.png" width="600" alt="Registeration"/> 
-<img src="./screenExamples/logIn.png" width="600" alt="Loging in"/> 
+<img src="./screenExamples/login.png" width="600" alt="Loging in"/> 
 
 - **Add, Edit and Delete Tasks** – with the ability to mark **Done**
 <img src="./screenExamples/addTask.png" width="600" alt="Add Tasks"/> 
