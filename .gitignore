@@ -1,2 +1,5 @@
 config.py
+instance/
+migrations/
 venv/
+static/profile_pics/
