@@ -88,6 +88,7 @@ This makes it suitable for students, professionals, and anyone who wants to **st
 
 - **Forget Password Reset** – Reset password via Email
 <img src="./screenExamples/emailresetpassword.png" width="600" alt="Reset Password"/>
+<img src="./screenExamples/email.png" width="600" alt="Email"/>
 <img src="./screenExamples/emailresetlink.png" width="600" alt="Email Reset"/>
 
 ---
