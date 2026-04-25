@@ -91,6 +91,9 @@ This makes it suitable for students, professionals, and anyone who wants to **st
 <img src="./screenExamples/email.png" width="600" alt="Email"/>
 <img src="./screenExamples/emailresetlink.png" width="600" alt="Email Reset"/>
 
+- **404 Error Handler** – Custom error page for Non-Existent routes
+<img src="./screenExamples/error404.png" width="600" alt="404 Error Page"/>
+
 ---
 
 ## ⚙️ Installation & Setup  
